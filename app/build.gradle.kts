@@ -11,6 +11,14 @@ localProperties.load(FileInputStream(rootProject.file("local.properties")))
 val groqApiKey: String = localProperties.getProperty("GROQ_API_KEY")
 
 android {
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a")
+            isUniversalApk = false
+        }
+    }
     namespace = "com.shamana.smartgroceryapp"
     compileSdk = 36
 
@@ -66,7 +74,6 @@ android {
 }
 
 dependencies {
-
     // Core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
