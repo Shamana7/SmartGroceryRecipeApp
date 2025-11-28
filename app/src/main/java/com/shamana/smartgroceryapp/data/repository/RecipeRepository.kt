@@ -16,8 +16,11 @@ object RecipeRepository {
 
     suspend fun generateRecipesFromAPI(ingredients: List<String>): List<Recipe> =
         withContext(Dispatchers.IO) {
+            if (API_KEY.isBlank()) {
+                println("⚠ API key is missing. Please add GROQ_API_KEY in local.properties.")
+                return@withContext emptyList()
+            }
             try {
-
                 val prompt = """
                     Generate 3 recipes using: ${ingredients.joinToString(", ")}.
                     RETURN ONLY VALID JSON. DO NOT ADD ANY EXTRA TEXT.

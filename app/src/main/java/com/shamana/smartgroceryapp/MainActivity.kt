@@ -22,6 +22,7 @@ import com.shamana.smartgroceryapp.viewmodel.MainViewModel
 class MainActivity : ComponentActivity() {
 
     private val CAMERA_PERMISSION_CODE = 100
+    private val API_KEY = BuildConfig.GROQ_API_KEY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +60,7 @@ class MainActivity : ComponentActivity() {
                     composable("recipes") {
                         RecipeScreen(
                             recipes = viewModel.recipes.collectAsState().value,
+                            apiKey = API_KEY,
                             onRecipeClick = { recipe ->
                                 navController.navigate("recipe_detail/${recipe.title}")
                             }

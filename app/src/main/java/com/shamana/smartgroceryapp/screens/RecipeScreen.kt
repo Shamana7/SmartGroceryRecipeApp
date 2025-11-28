@@ -27,9 +27,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.shamana.smartgroceryapp.data.model.Recipe
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.text.style.TextAlign
 
 @Composable
-fun RecipeScreen(recipes: List<Recipe>, onRecipeClick: (Recipe) -> Unit = {}) {
+fun RecipeScreen(recipes: List<Recipe>,
+                 apiKey: String,
+                 onRecipeClick: (Recipe) -> Unit = {}) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -43,6 +47,20 @@ fun RecipeScreen(recipes: List<Recipe>, onRecipeClick: (Recipe) -> Unit = {}) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
+        if (apiKey.isBlank()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "🔑 Unlock delicious recipes! Add your API key in local.properties to start cooking smarter.",
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Center
+                )
+            }
+
+        }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(recipes) { recipe ->
                 val gradient = Brush.horizontalGradient(
